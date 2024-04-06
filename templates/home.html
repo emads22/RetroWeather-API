@@ -8,7 +8,13 @@
     <h1>Weather Data API</h1>
     
     <p>URL format: http://127.0.0.1:5000/api/v1/station/date</p>
-    <p>URL format: http://127.0.0.1:5000/api/v1/10/1988-10-25</p>
+    <p>Example URL: <a href="http://127.0.0.1:5000/api/v1/10/1988-10-25">http://127.0.0.1:5000/api/v1/10/1988-10-25</a></p>
     
+    <!-- display all the stations data (names and ids) passed as arg (dataframe) to this webpage -->
+    <!-- The 'stations' variable is being output using template interpolation -->
+    <!-- with the double curly brackets syntax, which inserts the value of 'stations' here. -->
+    <!-- The 'safe' filter ensures that the content of 'stations' is rendered -->
+    <!-- as HTML safely, preventing any potential security vulnerabilities. -->
+    <div>{{ stations_data | safe }}</div>
 </body>
 </html>

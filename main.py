@@ -10,12 +10,18 @@ DATA_DIR = Path("static") / "data_small"
 # Create an instance of the Flask application
 app = Flask(__name__)
 
+# Define the path to the stations data file
+stations_data_path = DATA_DIR / "stations.txt"
+# Read the stations data file into a DataFrame, skipping the first 17 rows
+stations_df = pd.read_csv(stations_data_path, skiprows=17)
+# Select only the columns 'STAID' and 'STANAME' from the DataFrame
+stations_df = stations_df[['STAID', 'STANAME                                 ']]
 
 # Define a route for the home page ("/")
 @app.route("/")
 def home():
-    # Render the template named "home.html" and return it as the response
-    return render_template("home.html")
+    # Render the template named "home.html" with the variable `stations_data` and return it as the response
+    return render_template("home.html", stations_data=stations_df.to_html())    # Convert the stations DataFrame to HTML format
 
 
 # Define a route for the weather API endpoint
