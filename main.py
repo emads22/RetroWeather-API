@@ -26,7 +26,7 @@ def home():
 
 # Define a route for the weather API endpoint
 @app.route("/api/v1/<string:station>/<string:date>")
-def weather_api(station, date):
+def weather_api_default(station, date):
 
     # Construct the file path for the CSV file based on the station ID
     # DATA_DIR is assumed to be a pathlib.Path object representing the directory where the data files are stored
@@ -53,6 +53,57 @@ def weather_api(station, date):
     }
     # Return the weather data as a JSON response
     return weather_data
+
+
+@app.route("/api/v1/station/<string:station>")
+def one_station_all_years(station):
+    # Construct the file path for the station data file using the station ID
+    station_filepath = DATA_DIR / f"TG_STAID{str(station).zfill(6)}.txt"
+    # Read the station data from the CSV file, skipping the first 20 rows and parsing the 'DATE' column as dates
+    station_df = pd.read_csv(station_filepath, skiprows=20, parse_dates=["    DATE"])
+
+    # Convert the DataFrame to a list of dictionaries, each representing a record,
+    # using the 'records' orientation
+    return station_df.to_dict(orient='records')
+
+@app.route("/api/v1/station/<string:station>/<string:year>")
+def one_station_one_year(station, year):
+    # Construct the file path for the station data file using the station ID
+    station_filepath = DATA_DIR / f"TG_STAID{str(station).zfill(6)}.txt"
+    # Read the station data from the CSV file, skipping the first 20 rows and parsing the 'DATE' column as dates
+    station_df = pd.read_csv(station_filepath, skiprows=20, parse_dates=["    DATE"])
+    
+    # Convert the '    DATE' column to datetime format if it's not already in datetime format
+    # Filter the DataFrame to include only rows where the year component of the '    DATE' column matches the specified year
+    # station_df['    DATE'].str.startswith(year) won't work is because .str.startswith() is a string method and can only be used on columns containing string data, and station_df['    DATE'] is a datetime column, not a string column. 
+    station_df = station_df.loc[station_df['    DATE'].dt.year == int(year)] 
+
+    # Convert the DataFrame to a list of dictionaries, each representing a record,
+    # using the 'records' orientation
+    return station_df.to_dict(orient='records')
+
+def extract_specific_line_from_txt(file_path, line_number):
+    """
+    Extracts a specific line from a text file.
+
+    Args:
+        file_path (str): The path to the text file.
+        line_number (int): The index of the line to extract (0-based indexing).
+
+    Returns:
+        str: The specific line extracted from the file.
+    """
+
+    # Open the text file
+    with open(file_path, 'r') as file:
+        # Read all lines into a list
+        lines = file.readlines()        
+        # Check if the line number is within the range of lines
+        if line_number < 0 or line_number >= len(lines):
+            raise ValueError("\nLine number is out of range.\n")        
+        # Extract the specific line
+        specific_line = lines[line_number]
+    return specific_line
 
 
 # If this script is executed directly (not imported as a module), start the Flask application
