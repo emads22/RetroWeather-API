@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 # Define the directory path for 'data_small' directory within the 'static' folder
-DATA_DIR = Path("static") / "data_small"
+DATA_DIR = Path("assets") / "data_small"
 
 
 # Create an instance of the Flask application

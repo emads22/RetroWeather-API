@@ -10,3 +10,5 @@ __pycache__/
 # Ignore .vscode folder
 .vscode/
 
+# Ignore Exercises folder
+Exercises/
