@@ -1,36 +1,35 @@
 from flask import Flask, render_template
 import pandas as pd
 from pathlib import Path
+from app_utils import get_dataframe, format_stations_dataframe
 
 
 # Define the directory path for 'data_small' directory within the 'static' folder
 DATA_DIR = Path("assets") / "data_small"
+# Define the path to the stations data file
+STATIONS_DATA_FILE = DATA_DIR / "stations.txt"
 
 
 # Create an instance of the Flask application
 app = Flask(__name__)
 
-# Define the path to the stations data file
-stations_data_path = DATA_DIR / "stations.txt"
-# Read the stations data file into a DataFrame, skipping the first 17 rows
-stations_df = pd.read_csv(stations_data_path, skiprows=17)
-# Select only the columns 'STAID' and 'STANAME' from the DataFrame
-stations_df = stations_df[[
-    'STAID', 'STANAME                                 ']]
+
+stations_df = get_dataframe(STATIONS_DATA_FILE)
 
 
 # Define a route for the home page ("/")
 @app.route("/")
 def home():
+    # Convert the stations DataFrame to HTML format and format it using this function
+    stations_html_table = format_stations_dataframe(stations_df)
+
     # Render the template named "home.html" with the variable `stations_data` and return it as the response
-    # Convert the stations DataFrame to HTML format
-    return render_template("home.html", stations_data=stations_df.to_html())
+    return render_template("home.html", stations_data=stations_html_table)
 
 
 # Define a route for the weather API endpoint
 @app.route("/api/v1/<string:station>/<string:date>")
 def weather_api_default(station, date):
-
     # Construct the file path for the CSV file based on the station ID
     # DATA_DIR is assumed to be a pathlib.Path object representing the directory where the data files are stored
     # The station ID is padded with leading zeros to ensure it has six digits

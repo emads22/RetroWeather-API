@@ -1,0 +1,51 @@
+/* HTML Tags */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+    font-size: 16px; 
+    line-height: 1.6; /* Improved line spacing for better readability */
+}
+
+a {
+    color: #007bff; 
+    text-decoration: none; 
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+a:hover {
+    color: #0056b3; 
+}
+
+code {
+    font-size: 16px; 
+}
+
+/* Classes */
+.main-header {
+    background-color: #6c757d;
+    color: white;
+    padding: 20px 0;
+}
+
+.main-header h1 {
+    margin: 0;
+}
+
+.section-header {
+    margin-top: 20px;
+    color: #343a40;
+    padding: 10px; 
+}
+
+.footer {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px;
+    text-align: right;
+}
+
+.bg-light-grey {
+    background-color: #e9ecef; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+}
