@@ -5,7 +5,7 @@ from app_utils import get_dataframe, format_stations_dataframe
 
 
 # Define the directory path for 'data_small' directory within the 'static' folder
-DATA_DIR = Path("assets") / "data_small"
+DATA_DIR = Path("./static/assets") / "data_small"
 # Define the path to the stations data file
 STATIONS_DATA_FILE = DATA_DIR / "stations.txt"
 

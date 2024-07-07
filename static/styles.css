@@ -49,3 +49,15 @@ code {
     padding: 10px; 
     margin-bottom: 10px; 
 }
+
+.flex-container {
+    display: flex;
+    align-items: center;  /* Vertically center the items */
+    justify-content: center;  /* Horizontally center the items */
+    gap: 20px; /* Add some space between the image and the heading */
+}
+
+.header-logo {
+    max-height: 100px; 
+}
+
