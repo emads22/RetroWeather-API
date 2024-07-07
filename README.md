@@ -1,5 +1,7 @@
 # RetroWeather API
 
+![RetroWeather_API_logo](./assets/images/RetroWeather_API_logo.png)
+
 ## Overview
 RetroWeather API is a Flask application that delivers historical weather data from CSV files sourced from the `European Climate Assessment & Dataset (ECA&D)`. It features endpoints for fetching weather information based on station IDs and dates. Users can also switch to other data sources by updating the files in the static folder.
 
